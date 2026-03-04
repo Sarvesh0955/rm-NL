@@ -25,7 +25,7 @@ from sklearn.metrics import precision_recall_fscore_support, accuracy_score, con
 # -------------------------
 # Config / Hyperparameters
 # -------------------------
-DATA_DIR = "dataset"   # change if needed
+DATA_DIR = "dataset/Train"   # change if needed
 NORMAL_DIR = os.path.join(DATA_DIR, "NormalVideos")
 ACC_DIR = os.path.join(DATA_DIR, "RoadAccidents")
 
@@ -37,6 +37,7 @@ EPOCHS = 20
 RANDOM_SEED = 42
 UNDERSAMPLE_RATIO = 3   # normal:accident ratio per epoch (set to 3)
 VAL_SPLIT = 0.15        # fraction of videos for validation
+MAX_NORMAL_VIDEOS = 200
 
 DEVICE = None
 if torch.backends.mps.is_available():
@@ -87,6 +88,17 @@ def build_video_index(folder_path: str):
 print("Indexing dataset... (this may take a moment)")
 normal_vids = build_video_index(NORMAL_DIR)
 acc_vids = build_video_index(ACC_DIR)
+
+normal_keys = list(normal_vids.keys())
+random.shuffle(normal_keys)
+
+if len(normal_keys) > MAX_NORMAL_VIDEOS:
+    normal_keys = normal_keys[:MAX_NORMAL_VIDEOS]
+
+normal_vids = {k: normal_vids[k] for k in normal_keys}
+
+print("Normal videos used:", len(normal_vids))
+print("Accident videos used:", len(acc_vids))
 print(f"Found {len(normal_vids)} normal videos, {len(acc_vids)} accident videos.")
 
 # -------------------------
@@ -292,10 +304,10 @@ def make_epoch_sampler(train_seq_list, ratio=UNDERSAMPLE_RATIO, seed=None):
 def make_train_loader(epoch_idx):
     indices = make_epoch_sampler(train_sequences, ratio=UNDERSAMPLE_RATIO, seed=RANDOM_SEED + epoch_idx)
     sampler = SubsetRandomSampler(indices)
-    loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, sampler=sampler, num_workers=2, pin_memory=False)
+    loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, sampler=sampler, num_workers=0, pin_memory=False)
     return loader
 
-val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2, pin_memory=False)
+val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0, pin_memory=False)
 
 # -------------------------
 # Training utilities
@@ -310,7 +322,9 @@ def compute_metrics_all(y_true, y_pred):
 # Training loop
 # -------------------------
 model = CNN_LSTM_Classifier(emb_dim=256, hidden_dim=256, num_layers=1, num_classes=2).to(DEVICE)
-criterion = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 1.0], device=DEVICE))  # we already undersample; keep equal loss
+criterion = nn.CrossEntropyLoss(
+    weight=torch.tensor([1.0, 30.0]).to(DEVICE)
+)
 optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
 print("Model parameters:", sum(p.numel() for p in model.parameters() if p.requires_grad))
