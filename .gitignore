@@ -50,7 +50,6 @@ env/
 *.ipynb
 
 # Data files
-*.csv
 *.xlsx
 *.json
 data/
@@ -62,7 +61,6 @@ dataset/
 *.joblib
 *.h5
 *.pt
-*.pth
 models/
 
 # Environment variables
