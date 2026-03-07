@@ -1,0 +1,148 @@
+(venv) (base) sarvesh0955@Sarveshs-MacBook-Air NL % python nested_basic_train.py
+Device: mps
+Indexing dataset...
+Found 800 normal videos, 127 accident videos.
+Using 200 normal videos, 127 accident videos.
+Train videos: normal 170, acc 108 | Val videos: normal 30, acc 19
+Train sequences: 13516, Val sequences: 1746
+Train: Accident 1352, Normal 12164
+Model parameters: 1276228
+Loaded 13 keys from baseline: encoder=8, lstm=4
+Skipped 3 keys (shape mismatch or new): ['classifier.0.weight', 'classifier.0.bias', 'classifier.2.weight']
+
+=== Phase 1: Training memory + classifier (backbone frozen) ===
+Phase 1 trainable params: 132100
+  train: 100%|███████████████████████████| 676/676 [01:01<00:00, 11.06it/s, loss=0.107]
+Phase1 Epoch 1/5 TRAIN loss=0.0428 acc=0.9455 f1=0.9005
+  val: 100%|█████████████████████████████████████████| 219/219 [00:17<00:00, 12.30it/s]
+  VAL loss=0.7371 acc=0.8832 prec=0.4500 rec=0.7159 f1=0.5526
+  CM:
+[[1416  154]
+ [  50  126]]
+  Saved new best model.
+  train: 100%|███████████████████████████| 676/676 [00:56<00:00, 11.94it/s, loss=0.071]
+Phase1 Epoch 2/5 TRAIN loss=0.0284 acc=0.9602 f1=0.9257
+  val: 100%|█████████████████████████████████████████| 219/219 [00:15<00:00, 14.05it/s]
+  VAL loss=0.7909 acc=0.8814 prec=0.4448 rec=0.7102 f1=0.5470
+  CM:
+[[1414  156]
+ [  51  125]]
+  train: 100%|██████████████████████████| 676/676 [00:56<00:00, 12.02it/s, loss=0.0571]
+Phase1 Epoch 3/5 TRAIN loss=0.0229 acc=0.9673 f1=0.9382
+  val: 100%|█████████████████████████████████████████| 219/219 [00:15<00:00, 13.78it/s]
+  VAL loss=0.7192 acc=0.8895 prec=0.4682 rec=0.7102 f1=0.5643
+  CM:
+[[1428  142]
+ [  51  125]]
+  Saved new best model.
+  train: 100%|██████████████████████████| 676/676 [00:56<00:00, 11.98it/s, loss=0.0498]
+Phase1 Epoch 4/5 TRAIN loss=0.0199 acc=0.9700 f1=0.9432
+  val: 100%|█████████████████████████████████████████| 219/219 [00:15<00:00, 14.41it/s]
+  VAL loss=0.9572 acc=0.8918 prec=0.4753 rec=0.7102 f1=0.5695
+  CM:
+[[1432  138]
+ [  51  125]]
+  Saved new best model.
+  train: 100%|██████████████████████████| 676/676 [00:58<00:00, 11.64it/s, loss=0.0476]
+Phase1 Epoch 5/5 TRAIN loss=0.0190 acc=0.9734 f1=0.9491
+  val: 100%|█████████████████████████████████████████| 219/219 [00:16<00:00, 13.12it/s]
+  VAL loss=1.0959 acc=0.8895 prec=0.4656 rec=0.6534 f1=0.5437
+  CM:
+[[1438  132]
+ [  61  115]]
+
+=== Phase 2: Fine-tuning all parameters ===
+Phase 2 trainable params: 1276228
+  train: 100%|██████████████████████████| 676/676 [01:18<00:00,  8.60it/s, loss=0.0364]
+Phase2 Epoch 1/10 TRAIN loss=0.0146 acc=0.9774 f1=0.9567
+  val: 100%|█████████████████████████████████████████| 219/219 [00:16<00:00, 13.18it/s]
+  VAL loss=0.8956 acc=0.9026 prec=0.5126 rec=0.6932 f1=0.5894
+  CM:
+[[1454  116]
+ [  54  122]]
+  Saved new best model.
+  train: 100%|██████████████████████████| 676/676 [01:15<00:00,  8.97it/s, loss=0.0311]
+Phase2 Epoch 2/10 TRAIN loss=0.0124 acc=0.9830 f1=0.9670
+  val: 100%|█████████████████████████████████████████| 219/219 [00:16<00:00, 13.24it/s]
+  VAL loss=1.1239 acc=0.8929 prec=0.4762 rec=0.6250 f1=0.5405
+  CM:
+[[1449  121]
+ [  66  110]]
+  train: 100%|██████████████████████████| 676/676 [01:15<00:00,  8.94it/s, loss=0.0302]
+Phase2 Epoch 3/10 TRAIN loss=0.0121 acc=0.9835 f1=0.9681
+  val: 100%|█████████████████████████████████████████| 219/219 [00:16<00:00, 12.94it/s]
+  VAL loss=1.2082 acc=0.8940 prec=0.4809 rec=0.6420 f1=0.5499
+  CM:
+[[1448  122]
+ [  63  113]]
+  train: 100%|██████████████████████████| 676/676 [01:15<00:00,  9.01it/s, loss=0.0258]
+Phase2 Epoch 4/10 TRAIN loss=0.0103 acc=0.9839 f1=0.9688
+  val: 100%|█████████████████████████████████████████| 219/219 [00:16<00:00, 13.67it/s]
+  VAL loss=1.4234 acc=0.8769 prec=0.4204 rec=0.5852 f1=0.4893
+  CM:
+[[1428  142]
+ [  73  103]]
+  train: 100%|████████████████████████████| 676/676 [01:01<00:00, 10.98it/s, loss=0.02]
+Phase2 Epoch 5/10 TRAIN loss=0.0080 acc=0.9874 f1=0.9754
+  val: 100%|█████████████████████████████████████████| 219/219 [00:15<00:00, 14.59it/s]
+  VAL loss=1.3579 acc=0.8855 prec=0.4524 rec=0.6477 f1=0.5327
+  CM:
+[[1432  138]
+ [  62  114]]
+  train: 100%|██████████████████████████| 676/676 [01:13<00:00,  9.25it/s, loss=0.0198]
+Phase2 Epoch 6/10 TRAIN loss=0.0079 acc=0.9871 f1=0.9747
+  val: 100%|█████████████████████████████████████████| 219/219 [00:18<00:00, 11.61it/s]
+  VAL loss=1.7225 acc=0.8820 prec=0.4464 rec=0.7102 f1=0.5482
+  CM:
+[[1415  155]
+ [  51  125]]
+  train: 100%|██████████████████████████| 676/676 [01:36<00:00,  7.00it/s, loss=0.0197]
+Phase2 Epoch 7/10 TRAIN loss=0.0079 acc=0.9871 f1=0.9747
+  val: 100%|█████████████████████████████████████████| 219/219 [00:21<00:00, 10.06it/s]
+  VAL loss=1.6383 acc=0.8877 prec=0.4645 rec=0.7443 f1=0.5721
+  CM:
+[[1419  151]
+ [  45  131]]
+  train: 100%|██████████████████████████| 676/676 [01:45<00:00,  6.40it/s, loss=0.0132]
+Phase2 Epoch 8/10 TRAIN loss=0.0053 acc=0.9928 f1=0.9858
+  val: 100%|█████████████████████████████████████████| 219/219 [00:19<00:00, 11.22it/s]
+  VAL loss=1.4944 acc=0.8952 prec=0.4844 rec=0.6193 f1=0.5436
+  CM:
+[[1454  116]
+ [  67  109]]
+  train: 100%|██████████████████████████| 676/676 [01:23<00:00,  8.08it/s, loss=0.0126]
+Phase2 Epoch 9/10 TRAIN loss=0.0050 acc=0.9935 f1=0.9872
+  val: 100%|█████████████████████████████████████████| 219/219 [00:19<00:00, 11.00it/s]
+  VAL loss=1.5935 acc=0.8820 prec=0.4370 rec=0.5909 f1=0.5024
+  CM:
+[[1436  134]
+ [  72  104]]
+  train: 100%|███████████████████████████| 676/676 [01:32<00:00,  7.30it/s, loss=0.014]
+Phase2 Epoch 10/10 TRAIN loss=0.0056 acc=0.9922 f1=0.9847
+  val: 100%|█████████████████████████████████████████| 219/219 [00:18<00:00, 11.72it/s]
+  VAL loss=1.3993 acc=0.8769 prec=0.4229 rec=0.6080 f1=0.4988
+  CM:
+[[1424  146]
+ [  69  107]]
+
+Training complete. Best val F1: 0.5894
+(venv) (base) sarvesh0955@Sarveshs-MacBook-Air NL % python test_nested_basic.py
+Device: mps
+Indexing test dataset...
+Found 150 normal videos, 23 accident videos (test).
+Loaded checkpoint (epoch 6, phase 2, val_f1=0.5893719806763285)
+Running per-video inference...
+Videos: 100%|████████████████████████████████████████| 173/173 [00:52<00:00,  3.30it/s]
+
+=== Video-level Results (threshold=0.25) ===
+Accuracy:  0.7572
+Precision: 0.3137
+Recall:    0.6957
+F1:        0.4324
+Confusion Matrix:
+[[115  35]
+ [  7  16]]
+  threshold=0.25 => acc=0.7572 f1=0.4324
+  threshold=0.40 => acc=0.7861 f1=0.4638
+  threshold=0.50 => acc=0.7919 f1=0.4706
+Saved predictions to test_nested_predictions.csv
