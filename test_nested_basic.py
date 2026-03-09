@@ -29,7 +29,7 @@ IMG_SIZE = 64
 BATCH_SIZE = 8
 NUM_WORKERS = 0
 OUT_CSV = "test_nested_predictions.csv"
-PROB_THRESHOLD = 0.25  # for mean_prob video-level aggregation
+PROB_THRESHOLD = 0.20  # for mean_prob video-level aggregation
 
 # Device
 if torch.backends.mps.is_available():
@@ -259,7 +259,7 @@ print(f"F1:        {v_f1:.4f}")
 print(f"Confusion Matrix:\n{v_cm}")
 
 # Also eval at other thresholds for reference
-for thresh in [0.25, 0.4, 0.5]:
+for thresh in [0.15, 0.20, 0.25, 0.4, 0.5]:
     preds_t = [1 if p >= thresh else 0 for p in v_probs]
     acc_t = accuracy_score(v_true, preds_t)
     _, _, f1_t, _ = precision_recall_fscore_support(v_true, preds_t, average='binary', zero_division=0)

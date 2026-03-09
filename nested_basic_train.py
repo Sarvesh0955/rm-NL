@@ -45,7 +45,7 @@ PHASE1_LR = 1e-3
 PHASE2_EPOCHS = 10
 PHASE2_LR = 1e-4
 # Loss class weights
-LOSS_WEIGHT = [1.0, 8.0]
+LOSS_WEIGHT = [1.0, 25.0]
 
 # Device
 if torch.backends.mps.is_available():
